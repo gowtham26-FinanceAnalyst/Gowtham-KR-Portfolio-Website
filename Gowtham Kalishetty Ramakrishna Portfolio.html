@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gowtham KR — FP&A Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: rgba(255,255,255,0.07);
+    --gold: #c9a96e;
+    --gold-light: #e8c98a;
+    --white: #f0ece4;
+    --muted: #6b6878;
+    --accent: #1e1d2b;
+    --green: #4ade80;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5vw;
+    backdrop-filter: blur(20px);
+    background: rgba(10,10,15,0.7);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 5vw;
+    gap: 4rem;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 55vw;
+    height: 55vw;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(201,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 0.35rem 0.8rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+
+  .hero h1 span {
+    display: block;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin: 1.5rem 0 2.5rem;
+    max-width: 460px;
+    line-height: 1.8;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: #0a0a0f;
+    padding: 0.85rem 2rem;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--white);
+    padding: 0.85rem 2rem;
+    border: 1px solid var(--border);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.3s, color 0.3s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Hero right - stat card */
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 1s 0.4s forwards;
+  }
+
+  .stat-cell {
+    background: var(--surface);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-cell::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px;
+    height: 0;
+    background: var(--gold);
+    transition: height 0.6s ease;
+  }
+  .stat-cell:hover::before { height: 100%; }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-left {
+    opacity: 0;
+    animation: fadeUp 1s 0.1s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION WRAPPER ── */
+  section {
+    padding: 8rem 5vw;
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    margin-bottom: 4rem;
+    line-height: 1.1;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-sidebar {
+    position: sticky;
+    top: 8rem;
+  }
+
+  .about-contact {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-item:hover { color: var(--gold); }
+
+  .contact-icon {
+    width: 32px; height: 32px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    color: var(--gold);
+  }
+
+  .about-text p {
+    color: rgba(240,236,228,0.7);
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+  }
+
+  .highlight-bar {
+    border-left: 2px solid var(--gold);
+    padding-left: 1.5rem;
+    margin: 2.5rem 0;
+    color: var(--white);
+    font-size: 1.05rem;
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* ── SKILLS GRID ── */
+  .skills-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: -2rem;
+  }
+
+  .skill-category {
+    background: var(--bg);
+    padding: 2.5rem;
+    transition: background 0.3s;
+  }
+  .skill-category:hover { background: var(--accent); }
+
+  .skill-cat-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-tag {
+    font-size: 0.78rem;
+    color: rgba(240,236,228,0.65);
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+  .skill-tag:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--bg); }
+
+  .timeline {
+    position: relative;
+    padding-left: 2px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    padding-left: 3rem;
+    padding-bottom: 4rem;
+    position: relative;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 8px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-company {
+    font-size: 0.9rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .timeline-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .timeline-bullets li {
+    font-size: 0.9rem;
+    color: rgba(240,236,228,0.65);
+    padding-left: 1.25rem;
+    position: relative;
+    line-height: 1.7;
+  }
+
+  .timeline-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 0.75rem;
+    top: 0.1rem;
+  }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    position: relative;
+    background: var(--bg);
+    transition: border-color 0.3s, transform 0.3s;
+    overflow: hidden;
+  }
+
+  .project-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 2px;
+    width: 0;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    transition: width 0.5s ease;
+  }
+
+  .project-card:hover {
+    border-color: rgba(201,169,110,0.3);
+    transform: translateY(-3px);
+  }
+  .project-card:hover::after { width: 100%; }
+
+  .project-index {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    color: rgba(240,236,228,0.6);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+  }
+
+  .project-tag {
+    font-size: 0.7rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--gold);
+    border: 1px solid rgba(201,169,110,0.25);
+    padding: 0.2rem 0.55rem;
+    letter-spacing: 0.05em;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
+  }
+  .project-link:hover { color: var(--gold); }
+  .project-link span { font-size: 1rem; }
+
+  /* ── EDUCATION ── */
+  #education { background: var(--bg); }
+
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .edu-card {
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    background: var(--surface);
+    transition: border-color 0.3s;
+  }
+  .edu-card:hover { border-color: rgba(201,169,110,0.3); }
+
+  .edu-degree {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .edu-institution {
+    font-size: 0.88rem;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+  }
+
+  .edu-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── CERTIFICATIONS ── */
+  #certifications { background: var(--surface); border-top: 1px solid var(--border); }
+
+  .cert-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .cert-item {
+    background: var(--bg);
+    padding: 1.75rem 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: background 0.3s;
+  }
+  .cert-item:hover { background: var(--accent); }
+
+  .cert-icon {
+    width: 36px; height: 36px;
+    background: rgba(201,169,110,0.1);
+    border: 1px solid rgba(201,169,110,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .cert-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+    line-height: 1.4;
+  }
+
+  .cert-org {
+    font-size: 0.75rem;
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 8rem 5vw;
+  }
+
+  .contact-intro {
+    max-width: 500px;
+    margin: 0 auto 3rem;
+    color: rgba(240,236,228,0.6);
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .contact-email {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201,169,110,0.3);
+    padding-bottom: 0.25rem;
+    transition: border-color 0.3s;
+    display: inline-block;
+    margin-bottom: 3rem;
+  }
+  .contact-email:hover { border-color: var(--gold); }
+
+  .contact-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 5vw;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* Scroll animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding-top: 8rem; }
+    .hero-stats { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .about-sidebar { position: static; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">GKR · Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-tag">Available · London, UK</div>
+    <h1>Gowtham<span>Kalishetty</span></h1>
+    <p class="hero-sub">FP&A Analyst with expertise in financial modelling, budgeting & forecasting, and data-driven insights. Currently working towards AAT/CIMA qualification.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="mailto:gowthamrama9035@gmail.com" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-cell">
+      <div class="stat-number">2+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-number">4</div>
+      <div class="stat-label">Certifications</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-number">5yr</div>
+      <div class="stat-label">DCF Projections</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-number">35+</div>
+      <div class="stat-label">Payroll Employees</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-sidebar reveal">
+      <div class="section-label">01 · Who I Am</div>
+      <h2 class="section-title" style="margin-bottom:1.5rem; font-size:2rem;">Finance.<br>Modelling.<br>Insight.</h2>
+      <div class="about-contact">
+        <a href="tel:07887148350" class="contact-item">
+          <div class="contact-icon">☎</div>07887148350
+        </a>
+        <a href="mailto:gowthamrama9035@gmail.com" class="contact-item">
+          <div class="contact-icon">✉</div>gowthamrama9035@gmail.com
+        </a>
+        <a href="https://linkedin.com/in/gowthamkr26" target="_blank" class="contact-item">
+          <div class="contact-icon">in</div>gowthamkr26
+        </a>
+        <a class="contact-item">
+          <div class="contact-icon">⚑</div>London, United Kingdom
+        </a>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <p>Detail-oriented FP&A professional with hands-on experience in financial modelling, cost control, budgeting, forecasting, and variance analysis. I bring a proven track record across financial services, hospitality, and project-driven environments.</p>
+      <div class="highlight-bar">"Adept at delivering data-driven insights that support commercial decision-making."</div>
+      <p>Currently working towards my AAT/CIMA qualification, I hold a strong foundation in industry-standard tools including Excel, Sage 50, Xero, and QuickBooks. I am adept at balance sheet reconciliations, payroll processing, and end-to-end financial reporting.</p>
+      <p style="margin-bottom:0;">With an MBA from the University of East London and real-world analytical projects — including a full DCF valuation of Tata Motors and a BSE SENSEX valuation study — I bridge academic rigour with practical financial expertise.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="background: var(--bg); padding: 6rem 5vw;">
+  <div class="section-label reveal">02 · Expertise</div>
+  <h2 class="section-title reveal">Skills &amp; Tools</h2>
+  <div class="skills-categories reveal">
+    <div class="skill-category">
+      <div class="skill-cat-title">Finance &amp; FP&amp;A</div>
+      <div class="skill-list">
+        <span class="skill-tag">Financial Planning</span>
+        <span class="skill-tag">Budgeting & Forecasting</span>
+        <span class="skill-tag">Cost Control</span>
+        <span class="skill-tag">Variance Analysis</span>
+        <span class="skill-tag">Balance Sheet Reconciliation</span>
+        <span class="skill-tag">DCF Valuation</span>
+        <span class="skill-tag">Ratio Analysis</span>
+        <span class="skill-tag">Cash Flow Monitoring</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-title">Software &amp; Platforms</div>
+      <div class="skill-list">
+        <span class="skill-tag">Excel (Pivot, XLOOKUP)</span>
+        <span class="skill-tag">Sage 50</span>
+        <span class="skill-tag">Sage Payroll</span>
+        <span class="skill-tag">Xero</span>
+        <span class="skill-tag">QuickBooks</span>
+        <span class="skill-tag">PowerPoint</span>
+        <span class="skill-tag">ERP Systems</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-title">Project Finance</div>
+      <div class="skill-list">
+        <span class="skill-tag">Cost Reporting</span>
+        <span class="skill-tag">Schedule of Payments</span>
+        <span class="skill-tag">Financial Controls</span>
+        <span class="skill-tag">Governance & Compliance</span>
+        <span class="skill-tag">Risk Identification</span>
+        <span class="skill-tag">MTD Compliance</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-title">Soft Skills</div>
+      <div class="skill-list">
+        <span class="skill-tag">Analytical Thinking</span>
+        <span class="skill-tag">Communication</span>
+        <span class="skill-tag">Collaboration</span>
+        <span class="skill-tag">Attention to Detail</span>
+        <span class="skill-tag">Deadline-Driven</span>
+        <span class="skill-tag">Proactive</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label reveal">03 · Career</div>
+  <h2 class="section-title reveal">Work Experience</h2>
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-date">MAY 2025 — NOV 2025</div>
+      <div class="timeline-role">Trainee Bookkeeper / Financial Analyst</div>
+      <div class="timeline-company">Aston Pearls Accountants · London, UK</div>
+      <ul class="timeline-bullets">
+        <li>Maintained all bookkeeping activities, including VAT submissions under cash, standard, and flat rate schemes.</li>
+        <li>Handled Making Tax Digital (MTD) on Sage 50, QuickBooks, and Xero across multiple client accounts.</li>
+        <li>Posted journal entries and supported accruals and prepayments during month-end close processes.</li>
+        <li>Processed payroll for 35+ employees including payslips, maternity/paternity pay, RTI submissions, P45/P60 forms, and pension administration via Sage 50 Payroll.</li>
+      </ul>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-date">MAY 2023 — OCT 2023</div>
+      <div class="timeline-role">Accounts Intern</div>
+      <div class="timeline-company">Sai Leela Hospitality · Bangalore, India</div>
+      <ul class="timeline-bullets">
+        <li>Improved accounts payable efficiency by processing supplier invoices and supporting payment tracking across departments.</li>
+        <li>Conducted revenue and cost analysis, identifying key cost drivers to support financial performance reporting for management.</li>
+        <li>Supported accounts receivable and credit control by monitoring outstanding invoices and assisting with collections.</li>
+        <li>Enhanced financial visibility through monthly reporting and cash flow performance tracking.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label reveal">04 · Work</div>
+  <h2 class="section-title reveal">Key Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-index">PROJECT · 001</div>
+      <div class="project-title">Tata Motors — Financial Analysis &amp; Valuation</div>
+      <div class="project-desc">A comprehensive 5-year historical financial statement analysis of Tata Motors. Built a detailed Excel financial model for revenue, operating income, and cash flow forecasting with full DCF valuation and comparable company analysis.</div>
+      <div class="project-tags">
+        <span class="project-tag">DCF Valuation</span>
+        <span class="project-tag">Comparable Analysis</span>
+        <span class="project-tag">Ratio Analysis</span>
+        <span class="project-tag">Excel Modelling</span>
+        <span class="project-tag">Revenue Forecasting</span>
+      </div>
+      <a href="https://github.com/gowtham26-FinanceAnalyst/TATA-Motors---Financial-Analysis" target="_blank" class="project-link">
+        <span>↗</span> View on GitHub
+      </a>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-index">PROJECT · 002</div>
+      <div class="project-title">S&amp;P BSE SENSEX Valuation Report 2026</div>
+      <div class="project-desc">Applied the Dividend Discount Model (DDM) across 28 years of historical market data (1998–2025) to determine the BSE SENSEX's intrinsic value. Estimated fair value at ~₹1,23,412 — approximately 48% above the then-current level of ₹83,230.</div>
+      <div class="project-tags">
+        <span class="project-tag">DDM Valuation</span>
+        <span class="project-tag">Market Analysis</span>
+        <span class="project-tag">EPS Growth</span>
+        <span class="project-tag">P/E & P/B Ratios</span>
+        <span class="project-tag">Equity Risk Premium</span>
+      </div>
+      <a href="https://github.com/gowtham26-FinanceAnalyst/BSE-SENSEX-Valuation-Report-2026" target="_blank" class="project-link">
+        <span>↗</span> View on GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label reveal">05 · Academic</div>
+  <h2 class="section-title reveal">Education</h2>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-degree">Master of Business Administration</div>
+      <div class="edu-institution">University of East London</div>
+      <div class="edu-period">JAN 2024 — SEP 2025</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">Bachelor of Commerce (B.Com)</div>
+      <div class="edu-institution">City College, Bangalore</div>
+      <div class="edu-period">SEP 2020 — AUG 2023</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label reveal">06 · Credentials</div>
+  <h2 class="section-title reveal">Certifications</h2>
+  <div class="cert-list reveal">
+    <div class="cert-item">
+      <div class="cert-icon">🏆</div>
+      <div>
+        <div class="cert-name">Excel Skills for Business Job Simulation</div>
+        <div class="cert-org">Goldman Sachs · 2025</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">✓</div>
+      <div>
+        <div class="cert-name">QuickBooks Certified User</div>
+        <div class="cert-org">Intuit QuickBooks · 2025</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">✓</div>
+      <div>
+        <div class="cert-name">Xero Advisor Certified</div>
+        <div class="cert-org">Xero · 2025</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">✓</div>
+      <div>
+        <div class="cert-name">Sage Payroll Certified</div>
+        <div class="cert-org">Sage Accounts &amp; Payroll · 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label reveal">07 · Connect</div>
+  <h2 class="section-title reveal" style="margin-bottom:1rem;">Let's Work Together</h2>
+  <p class="contact-intro reveal">I'm open to FP&A, financial analysis, and bookkeeping roles across London. Right to work in the UK. Available to start immediately.</p>
+  <a href="mailto:gowthamrama9035@gmail.com" class="contact-email reveal">gowthamrama9035@gmail.com</a>
+  <div class="contact-links reveal">
+    <a href="tel:07887148350" class="btn-ghost">☎ 07887 148 350</a>
+    <a href="https://linkedin.com/in/gowthamkr26" target="_blank" class="btn-primary">LinkedIn Profile</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Gowtham Kalishetty Ramakrishna</span>
+  <span>London, United Kingdom</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => io.observe(el));
+
+  // Nav active state
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 150) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+    });
+  });
+</script>
+</body>
+</html>
